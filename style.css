@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #eee;
+}
+
+a, li, div, h1, h2, h3, h4, h5, h6, p, em, strong, img{
+  background-color: inherit;
+}
+
+.display {
+  justify-content: right;
+  text-align: right;
+  height: 34px;
+  width: 100%;
+  padding: 2px;
+  border-style: solid;
+  border-color: #222;
+
+  background-color: aquamarine;
+}
+
+.all-button-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  width: 100%;
+  background-color: #811;
+  padding: 20px;
+}
+
+.inner-top-container {
+  display: flex;
+
+}
+
+.inner-bottom-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.right-operators {
+  display: flex;
+  flex-direction: column;
+}
+
+.number-pad {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  background-color: #194;
+  padding: 0;
+  width: 120px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn0 {
+  min-width: 80px;
+}
+
+.multiply {
+  align-items: flex-end;
+}
+
+button {
+  text-align: center;
+  min-width: 40px;
+  min-height: 40px;
+  font-size: 28px;
+  font-weight: 800;
+  border-style: solid;
+  border-color: #222;
+  border-width: 3px;
+  border-radius: 5px;
+}
+
+.number-btn {
+  background-color: #2c8;
+}
+
+.operator-btn {
+  background-color: #c44;
+  height: 100%;
+}
+
+body {
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  justify-content: center; 
+  min-height: 40px;
+  padding: 12px 12px;
+  background-color: #ccc;
+}
