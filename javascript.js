@@ -66,9 +66,11 @@ const buttonEquals = rightOperators.appendChild(document.createElement('button')
       buttonEquals.classList.add('btn', 'operator-btn', 'equals');
       buttonEquals.textContent = "=";
 
+let displayText = '';
+
 function keyPress(e) {
   const whatKey = e.keyCode % 48;
-  resultDisplay.textContent = whatKey
+//  resultDisplay.textContent = whatKey
   if (e.key === 'Tab' || e.key === 'NumLock') {
     return;
   }
@@ -127,23 +129,47 @@ function isNumeric(x) {
 }
 
 function workingAdd() {
-  
+  operate();
+  displayText = workingDisplay.textContent.split(' ');
+  if (displayText[displayText.length - 1].includes('+')) {
+    // do nothing
+  } else {
+    workingDisplay.textContent += ' + ';
+  }
 }
 
 function workingSubtract() {
-  
+  operate();
+  displayText = workingDisplay.textContent.split(' ');
+  if (displayText[displayText.length - 1].includes('-')) {
+    // do nothing
+  } else {
+    workingDisplay.textContent += ' - ';
+  }  
 }
 
 function workingMultiply() {
-  
+  operate();
+  displayText = workingDisplay.textContent.split(' ');
+  if (displayText[displayText.length - 1].includes('-')) {
+    // do nothing
+  } else {
+    workingDisplay.textContent += ' * ';
+  }  
 }
 
 function workingDivide() {
-  
+  operate();
+  displayText = workingDisplay.textContent.split(' ');
+  if (displayText[displayText.length - 1].includes('-')) {
+    // do nothing
+  } else {
+    workingDisplay.textContent += ' / ';
+  }  
 }
 
 function workingDecimal() {
-  let displayText = workingDisplay.textContent.split(' ');
+  displayText = workingDisplay.textContent.split(' ');
   if (displayText[displayText.length - 1].includes('.')) {
     // do nothing
   } else {
@@ -157,7 +183,29 @@ function clear() {
 }
 
 function operate() {
-
+  let values;
+  displayText = workingDisplay.textContent
+  if (displayText.includes(' + ')) {
+    values = displayText.split(' + ');
+    resultDisplay.textContent = Number(values[0]) + Number(values[1]);
+    workingDisplay.textContent = Number(values[0]) + Number(values[1]);
+  } else if (displayText.includes(' - ')) {
+    values = displayText.split(' - ');
+    resultDisplay.textContent = Number(values[0]) - Number(values[1]);
+    workingDisplay.textContent = Number(values[0]) - Number(values[1]);
+  } else if (displayText.includes(' * ')) {
+    values = displayText.split(' * ');
+    resultDisplay.textContent = Number(values[0]) * Number(values[1]);
+    workingDisplay.textContent = Number(values[0]) * Number(values[1]);
+  } else if (displayText.includes(' / ')) {
+    values = displayText.split(' / ');
+    resultDisplay.textContent = Number(values[0]) / Number(values[1]);
+    workingDisplay.textContent = Number(values[0]) / Number(values[1]);
+  } else {
+    return;
+  }
+    //case 'none': // recently cleared or fresh start      
 }
 
 document.body.addEventListener('keydown', keyPress)
+

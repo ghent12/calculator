@@ -104,3 +104,9 @@ footer {
   padding: 12px 12px;
   background-color: #ccc;
 }
+
+.clear {
+  color: #f44;
+  border-color: #400;
+  background-color: #111;
+}
