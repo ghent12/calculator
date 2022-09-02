@@ -13,11 +13,11 @@ a, li, div, h1, h2, h3, h4, h5, h6, p, em, strong, img{
   justify-content: right;
   text-align: right;
   height: 34px;
-  width: 100%;
+  width: 200px;
   padding: 2px;
   border-style: solid;
   border-color: #222;
-
+  font-family: 'Courier New', Courier, monospace;
   background-color: aquamarine;
 }
 
@@ -25,9 +25,11 @@ a, li, div, h1, h2, h3, h4, h5, h6, p, em, strong, img{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap-reverse;
-  width: 100%;
+  width: 200px;
   background-color: #811;
-  padding: 20px;
+  padding: 18px;
+  border-style: solid;
+  border-color: #222;
 }
 
 .inner-top-container {

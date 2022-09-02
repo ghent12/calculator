@@ -66,3 +66,98 @@ const buttonEquals = rightOperators.appendChild(document.createElement('button')
       buttonEquals.classList.add('btn', 'operator-btn', 'equals');
       buttonEquals.textContent = "=";
 
+function keyPress(e) {
+  const whatKey = e.keyCode % 48;
+  resultDisplay.textContent = whatKey
+  if (e.key === 'Tab' || e.key === 'NumLock') {
+    return;
+  }
+  if (whatKey < 10) {
+    workingDisplay.textContent += whatKey;
+  } else {
+    switch (whatKey) {
+      case 10:
+        workingMultiply();
+        break;
+      case 11:
+        workingAdd();
+        break;
+      case 13:
+        if (e.key === '-') {
+          workingSubtract();
+        } else if (e.key === 'Enter') {
+          operate();
+        }
+        break;
+      case 14:
+        workingDecimal();
+        break;
+      case 15:
+        workingDivide();
+        break;
+      case 19:
+        clear();
+        break;
+      case 43:
+        operate();
+        break;
+      case 45:
+        workingSubtract();
+        break;
+      case 46:
+        workingDecimal();
+        break;
+    }
+    /* run an operator command. 
+    10 is *
+    11 is +
+    13 is - or keypad Enter
+    14 is .
+    15 is /
+    19 is c
+    43 is =
+    45 is -
+    46 is also .
+    */
+  }
+}
+
+function isNumeric(x) {
+  return !isNaN(parseFloat(x)) && isFinite(x);
+}
+
+function workingAdd() {
+  
+}
+
+function workingSubtract() {
+  
+}
+
+function workingMultiply() {
+  
+}
+
+function workingDivide() {
+  
+}
+
+function workingDecimal() {
+  let displayText = workingDisplay.textContent.split(' ');
+  if (displayText[displayText.length - 1].includes('.')) {
+    // do nothing
+  } else {
+    workingDisplay.textContent += '.';
+  }
+}
+
+function clear() {
+  workingDisplay.textContent = "";
+  resultDisplay.textContent = "";
+}
+
+function operate() {
+
+}
+
+document.body.addEventListener('keydown', keyPress)
