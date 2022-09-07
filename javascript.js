@@ -270,13 +270,16 @@ function removeExcessZeroes() {
     displayText = workingDisplay.textContent.split('.');
     decimals = displayText[1].split(''); // Show only after decimal
     resultantDecimals = decimals;
-    console.log('273')
+    console.log(displayText[0])
     for (let i = decimals.length - 1; i >= 0; --i) { 
       // However long the decimals are, start at the end and work your way back
-      console.log(decimals[i]);
-      if (keepPopping && (decimals[i] === 0)) {
-        resultantDecimals.slice(0,-1);
-        keepPopping = false;
+      console.log('decimals[' + i + '] is ' + decimals[i]);
+      if (keepPopping && (decimals[i] == 0)) {
+        console.log('keepPopping is ' + keepPopping);
+        resultantDecimals.splice(i, 1);
+        if (decimals[i] == 0) {
+          keepPopping = false;
+        }
       } 
     }
     console.log(resultantDecimals);
