@@ -90,7 +90,7 @@ let displayText = '';
 buttons.forEach(button => button.addEventListener('click', buttonPress))
 
 function buttonPress(e) {
-  console.log(e);
+  //console.log(e);
   switch (e.target.id) {
     case 'zero':
       workingDisplay.textContent += '0';
@@ -230,7 +230,7 @@ function workingSubtract() {
 function workingMultiply() {
   operate();
   displayText = workingDisplay.textContent.split(' ');
-  if (displayText[displayText.length - 1].includes('-')) {
+  if (displayText[displayText.length - 1].includes('*')) {
     // do nothing
   } else {
     workingDisplay.textContent += ' * ';
@@ -240,7 +240,7 @@ function workingMultiply() {
 function workingDivide() {
   operate();
   displayText = workingDisplay.textContent.split(' ');
-  if (displayText[displayText.length - 1].includes('-')) {
+  if (displayText[displayText.length - 1].includes('/')) {
     // do nothing
   } else {
     workingDisplay.textContent += ' / ';
@@ -261,12 +261,45 @@ function clear() {
   resultDisplay.textContent = "";
 }
 
+function removeExcessZeroes() {
+  let decimals
+    , resultantDecimals
+    , keepPopping = true;
+    console.log(Number(workingDisplay.textContent))
+  if (workingDisplay.textContent.includes('.')) {
+    displayText = workingDisplay.textContent.split('.');
+    decimals = displayText[1].split(''); // Show only after decimal
+    resultantDecimals = decimals;
+    console.log('273')
+    for (let i = decimals.length - 1; i >= 0; --i) { 
+      // However long the decimals are, start at the end and work your way back
+      console.log(decimals[i]);
+      if (keepPopping && (decimals[i] === 0)) {
+        resultantDecimals.slice(0,-1);
+        keepPopping = false;
+      } 
+    }
+    console.log(resultantDecimals);
+    workingDisplay.textContent = displayText[0].toString() + '.' + resultantDecimals.join('');
+    resultDisplay.textContent = displayText[0].toString() + '.' + resultantDecimals.join('');
+  } else {
+    return;
+  }
+
+}
+
 function operate() {
   let values
     , result
     , toTruncate;
 
   displayText = workingDisplay.textContent
+
+  if (displayText === "") {
+    workingDisplay.textContent = "0";
+    return;
+  }
+
   if (displayText.includes(' + ')) {
     values = displayText.split(' + ');
     result = Number(values[0]) + Number(values[1])
@@ -302,8 +335,13 @@ function operate() {
     workingDisplay.textContent = result;
   } else if (displayText.includes(' / ')) {
     values = displayText.split(' / ');
+    if (Number(values[1]) === 0) {
+      resultDisplay.textContent = "Can't divide by 0!"
+      workingDisplay.textContent = "";
+      return;
+    }
     result = Number(values[0]) / Number(values[1])
-    toTruncate = result.toString();
+        toTruncate = result.toString();
     if (toTruncate.includes('.')) {
       if (toTruncate.split('.')[1].length > 8) {
         result = result.toFixed(8);
@@ -314,7 +352,7 @@ function operate() {
   } else {
     return;
   }
-    //case 'none': // recently cleared or fresh start      
+  removeExcessZeroes();
 }
 
 document.body.addEventListener('keydown', keyPress)
