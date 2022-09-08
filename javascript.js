@@ -85,45 +85,77 @@ const buttonEquals = rightOperators.appendChild(document.createElement('button')
 
 const buttons = document.querySelectorAll('button')
 
-let displayText = '';
+let displayText = ''
+  , isResult = true;
 
 buttons.forEach(button => button.addEventListener('click', buttonPress))
+
+function resultOrNot(n) {
+  if (isResult && (n !== ".")) {
+    workingDisplay.textContent = n;
+    console.log('a')
+  } else if (isResult && n === ".") {
+    workingDisplay.textContent = "0.";
+    console.log('b')
+  } else if ((isResult == false) && (n !== ".")) {
+    workingDisplay.textContent += n;
+    console.log('c')
+  }
+}
 
 function buttonPress(e) {
   //console.log(e);
   switch (e.target.id) {
     case 'zero':
-      workingDisplay.textContent += '0';
+/*      if (isResult) {
+        workingDisplay.textContent = "0";
+      } else {
+        workingDisplay.textContent += '0';
+      }*/
+      resultOrNot(0);
+      isResult = false;
       break;
     case 'one':
-      workingDisplay.textContent += '1';
+      resultOrNot(1);
+      isResult = false;
       break;
     case 'two':
-      workingDisplay.textContent += '2';
+      resultOrNot(2);
+      isResult = false;
       break;
     case 'three':
-      workingDisplay.textContent += '3';
+      resultOrNot(3);
+      isResult = false;
       break;
     case 'four':
-      workingDisplay.textContent += '4';
+      resultOrNot(4);
+      isResult = false;
       break;
     case 'five':
-      workingDisplay.textContent += '5';
+      resultOrNot(5);
+      isResult = false;
       break;
     case 'six':
-      workingDisplay.textContent += '6';
+      resultOrNot(6);
+      isResult = false;
       break;
     case 'seven':
-      workingDisplay.textContent += '7';
+      resultOrNot(7);
+      isResult = false;
       break;
     case 'eight':
-      workingDisplay.textContent += '8';
+      resultOrNot(8);
+      isResult = false;
       break;
     case 'nine':
-      workingDisplay.textContent += '9';
+      resultOrNot(9);
+      isResult = false;
       break;
     case 'decimal':
+//      if (isResult) {workingDisplay.textContent = "0";}
+      resultOrNot('.')
       workingDecimal();
+      isResult = false;
       break;
     case 'clear':
       clear();
@@ -143,7 +175,6 @@ function buttonPress(e) {
     case 'equals':
       operate();
       break;
-            
   }
 }
 
@@ -154,7 +185,9 @@ function keyPress(e) {
     return;
   }
   if (whatKey < 10) {
-    workingDisplay.textContent += whatKey;
+    resultOrNot(whatKey);
+    isResult = false;
+//    workingDisplay.textContent += whatKey;
   } else {
     switch (whatKey) {
       case 10:
@@ -171,7 +204,9 @@ function keyPress(e) {
         }
         break;
       case 14:
+        resultOrNot('.')
         workingDecimal();
+        isResult = false;
         break;
       case 15:
         workingDivide();
@@ -209,41 +244,57 @@ function isNumeric(x) {
 
 function workingAdd() {
   operate();
+  if (resultDisplay.textContent.includes('divide by 0')) {
+    workingDisplay.textContent += '0';
+  }
   displayText = workingDisplay.textContent.split(' ');
   if (displayText[displayText.length - 1].includes('+')) {
     // do nothing
   } else {
     workingDisplay.textContent += ' + ';
+    isResult = false;
   }
 }
 
 function workingSubtract() {
   operate();
+  if (resultDisplay.textContent.includes('divide by 0')) {
+    workingDisplay.textContent += '0';
+  }
   displayText = workingDisplay.textContent.split(' ');
   if (displayText[displayText.length - 1].includes('-')) {
     // do nothing
   } else {
     workingDisplay.textContent += ' - ';
+    isResult = false;
   }  
 }
 
 function workingMultiply() {
   operate();
+  if (resultDisplay.textContent.includes('divide by 0')) {
+    workingDisplay.textContent += '0';
+  }
   displayText = workingDisplay.textContent.split(' ');
   if (displayText[displayText.length - 1].includes('*')) {
     // do nothing
   } else {
     workingDisplay.textContent += ' * ';
+    isResult = false;
   }  
 }
 
 function workingDivide() {
   operate();
+  if (resultDisplay.textContent.includes('divide by 0')) {
+    workingDisplay.textContent += '0';
+  }
   displayText = workingDisplay.textContent.split(' ');
   if (displayText[displayText.length - 1].includes('/')) {
     // do nothing
   } else {
     workingDisplay.textContent += ' / ';
+    isResult = false;
   }  
 }
 
@@ -252,7 +303,12 @@ function workingDecimal() {
   if (displayText[displayText.length - 1].includes('.')) {
     // do nothing
   } else {
+    console.log(displayText)
+    if (displayText[displayText.length - 1] === "") {
+      workingDisplay.textContent += '0';
+    }
     workingDisplay.textContent += '.';
+    isResult = false;
   }
 }
 
@@ -264,31 +320,31 @@ function clear() {
 function removeExcessZeroes() {
   let decimals
     , resultantDecimals
-    , keepPopping = true;
-    console.log(Number(workingDisplay.textContent))
+    , keepSlicing = true;
+    //console.log(Number(workingDisplay.textContent))
   if (workingDisplay.textContent.includes('.')) {
     displayText = workingDisplay.textContent.split('.');
     decimals = displayText[1].split(''); // Show only after decimal
     resultantDecimals = decimals;
-    console.log(displayText[0])
+    //console.log(displayText[0])
     for (let i = decimals.length - 1; i >= 0; --i) { 
       // However long the decimals are, start at the end and work your way back
-      console.log('decimals[' + i + '] is ' + decimals[i]);
-      if (keepPopping && (decimals[i] == 0)) {
-        console.log('keepPopping is ' + keepPopping);
-        resultantDecimals.splice(i, 1);
-        if (decimals[i] == 0) {
-          keepPopping = false;
+      //console.log('decimals[' + i + '] is ' + decimals[i]);
+      if (keepSlicing) {
+        //console.log('keepSlicing is ' + keepSlicing);
+        if (decimals[i] != 0) {
+          keepSlicing = false;
+        } else if ((decimals[i] == 0)) {
+          resultantDecimals.splice(i, 1);
         }
       } 
     }
-    console.log(resultantDecimals);
+    //console.log(resultantDecimals);
     workingDisplay.textContent = displayText[0].toString() + '.' + resultantDecimals.join('');
     resultDisplay.textContent = displayText[0].toString() + '.' + resultantDecimals.join('');
   } else {
     return;
   }
-
 }
 
 function operate() {
@@ -313,6 +369,7 @@ function operate() {
       }
     }
     resultDisplay.textContent = result;
+    isResult = true;
     workingDisplay.textContent = result;
   } else if (displayText.includes(' - ')) {
     values = displayText.split(' - ');
@@ -324,6 +381,7 @@ function operate() {
       }
     }
     resultDisplay.textContent = result;
+    isResult = true;
     workingDisplay.textContent = result;
   } else if (displayText.includes(' * ')) {
     values = displayText.split(' * ');
@@ -335,22 +393,29 @@ function operate() {
       }
     }
     resultDisplay.textContent = result;
+    isResult = true;
     workingDisplay.textContent = result;
   } else if (displayText.includes(' / ')) {
     values = displayText.split(' / ');
     if (Number(values[1]) === 0) {
       resultDisplay.textContent = "Can't divide by 0!"
       workingDisplay.textContent = "";
+      isResult = true;
       return;
     }
-    result = Number(values[0]) / Number(values[1])
-        toTruncate = result.toString();
+    result = Number(values[0]) / Number(values[1]);
+    console.group('division');
+      console.log(Number(values[0]) + '/' + Number(values[1]));
+      console.log('result is ' + result);
+    console.groupEnd('division');
+    toTruncate = result.toString();
     if (toTruncate.includes('.')) {
       if (toTruncate.split('.')[1].length > 8) {
         result = result.toFixed(8);
       }
     }
     resultDisplay.textContent = result;
+    isResult = true;
     workingDisplay.textContent = result;
   } else {
     return;
