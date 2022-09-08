@@ -6,14 +6,6 @@ const workingDisplay = container.appendChild(document.createElement('div'));
       workingDisplay.classList.add('display', 'working-display');
 const allButtonContainer = container.appendChild(document.createElement('div'));
       allButtonContainer.classList.add('container', 'all-button-container');
-// const innerTopContainer = allButtonContainer.appendChild(document.createElement('div'));
-//       innerTopContainer.classList.add('container', 'inner-top-container');
-// const innerBottomContainer = allButtonContainer.appendChild(document.createElement('div'));
-//       innerBottomContainer.classList.add('container', 'inner-bottom-container');
-// const rightOperators = innerBottomContainer.appendChild(document.createElement('div'));
-//       rightOperators.classList.add('container', 'right-operators');
-//const numberPad = innerBottomContainer.appendChild(document.createElement('div'));
-//      numberPad.classList.add('container', 'number-pad');
 const numberPad = allButtonContainer.appendChild(document.createElement('div'));
       numberPad.classList.add('container', 'number-pad');
 const button0 = numberPad.appendChild(document.createElement('button'));
@@ -60,32 +52,26 @@ const button9 = numberPad.appendChild(document.createElement('button'));
       button9.classList.add('btn', 'number-btn', 'btn9');
       button9.textContent = "9";
       button9.id = "nine";
-//const buttonClear = innerTopContainer.appendChild(document.createElement('button'));
 const buttonClear = numberPad.appendChild(document.createElement('button'));
       buttonClear.classList.add('btn', 'operator-btn', 'clear');
       buttonClear.textContent = "C";
       buttonClear.id = "clear";
-//const buttonDivide = innerTopContainer.appendChild(document.createElement('button'));
 const buttonDivide = numberPad.appendChild(document.createElement('button'));
       buttonDivide.classList.add('btn', 'operator-btn', 'divide');
       buttonDivide.textContent = "/";
       buttonDivide.id = "divide";
-//const buttonMultiply = innerTopContainer.appendChild(document.createElement('button'));
 const buttonMultiply = numberPad.appendChild(document.createElement('button'));
       buttonMultiply.classList.add('btn', 'operator-btn', 'multiply');
       buttonMultiply.textContent = "*";
       buttonMultiply.id = "multiply";
-//const buttonAdd = rightOperators.appendChild(document.createElement('button'));
 const buttonAdd = numberPad.appendChild(document.createElement('button'));
       buttonAdd.classList.add('btn', 'operator-btn', 'add');
       buttonAdd.textContent = "+";
       buttonAdd.id = "add";
-//const buttonSubtract = innerTopContainer.appendChild(document.createElement('button'));
 const buttonSubtract = numberPad.appendChild(document.createElement('button'));
       buttonSubtract.classList.add('btn', 'operator-btn', 'subtract');
       buttonSubtract.textContent = "-";
       buttonSubtract.id = "subtract";
-//const buttonEquals = rightOperators.appendChild(document.createElement('button'));
 const buttonEquals = numberPad.appendChild(document.createElement('button'));
       buttonEquals.classList.add('btn', 'operator-btn', 'equals');
       buttonEquals.textContent = "=";
@@ -102,25 +88,16 @@ buttons.forEach(button => button.addEventListener('focus', () => {workingDisplay
 function resultOrNot(n) {
   if (isResult && (n !== ".")) {
     workingDisplay.textContent = n;
-    //console.log('a')
   } else if (isResult && n === ".") {
     workingDisplay.textContent = "0.";
-    //console.log('b')
   } else if ((isResult == false) && (n !== ".")) {
     workingDisplay.textContent += n;
-    //console.log('c')
   }
 }
 
 function buttonPress(e) {
-  //console.log(e);
   switch (e.target.id) {
     case 'zero':
-/*      if (isResult) {
-        workingDisplay.textContent = "0";
-      } else {
-        workingDisplay.textContent += '0';
-      }*/
       resultOrNot(0);
       isResult = false;
       break;
@@ -161,7 +138,6 @@ function buttonPress(e) {
       isResult = false;
       break;
     case 'decimal':
-//      if (isResult) {workingDisplay.textContent = "0";}
       resultOrNot('.')
       workingDecimal();
       isResult = false;
@@ -189,14 +165,12 @@ function buttonPress(e) {
 
 function keyPress(e) {
   const whatKey = e.keyCode % 48;
-  //resultDisplay.textContent = whatKey
   if (e.key === 'Tab' || e.key === 'NumLock' || e.key === 'Backspace') {
     return;
   }
   if (whatKey < 10) {
     resultOrNot(whatKey);
     isResult = false;
-//    workingDisplay.textContent += whatKey;
   } else {
     switch (whatKey) {
       case 10:
@@ -283,13 +257,8 @@ function workingSubtract() {
     workingDisplay.textContent += '0';
   }
   displayText = workingDisplay.textContent.split(' ');
-//  if (displayText[displayText.length - 1].includes('-')) {
-    // do nothing
-    console.log('-')
-  //} else {
     workingDisplay.textContent += ' - ';
     isResult = false;
-  //}  
 }
 
 function workingMultiply() {
@@ -345,17 +314,13 @@ function removeExcessZeroes() {
   let decimals
     , resultantDecimals
     , keepSlicing = true;
-    //console.log(Number(workingDisplay.textContent))
   if (workingDisplay.textContent.includes('.')) {
     displayText = workingDisplay.textContent.split('.');
     decimals = displayText[1].split(''); // Show only after decimal
     resultantDecimals = decimals;
-    //console.log(displayText[0])
     for (let i = decimals.length - 1; i >= 0; --i) { 
       // However long the decimals are, start at the end and work your way back
-      //console.log('decimals[' + i + '] is ' + decimals[i]);
       if (keepSlicing) {
-        //console.log('keepSlicing is ' + keepSlicing);
         if (decimals[i] != 0) {
           keepSlicing = false;
         } else if ((decimals[i] == 0)) {
@@ -363,7 +328,6 @@ function removeExcessZeroes() {
         }
       } 
     }
-    //console.log(resultantDecimals);
     workingDisplay.textContent = displayText[0].toString() + '.' + resultantDecimals.join('');
     resultDisplay.textContent = displayText[0].toString() + '.' + resultantDecimals.join('');
   } else {
