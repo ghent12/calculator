@@ -102,13 +102,13 @@ buttons.forEach(button => button.addEventListener('focus', () => {workingDisplay
 function resultOrNot(n) {
   if (isResult && (n !== ".")) {
     workingDisplay.textContent = n;
-    console.log('a')
+    //console.log('a')
   } else if (isResult && n === ".") {
     workingDisplay.textContent = "0.";
-    console.log('b')
+    //console.log('b')
   } else if ((isResult == false) && (n !== ".")) {
     workingDisplay.textContent += n;
-    console.log('c')
+    //console.log('c')
   }
 }
 
@@ -251,7 +251,18 @@ function isNumeric(x) {
   return !isNaN(parseFloat(x)) && isFinite(x);
 }
 
+function switchOperator() {
+  let displayLength = workingDisplay.textContent.length;
+  if (displayLength > 2) {
+    displayText = workingDisplay.textContent[displayLength - 2];
+  }
+  if (displayText === '-' || displayText === '+' || displayText === '/' || displayText === '*') {
+    workingDisplay.textContent = workingDisplay.textContent.substring(0, displayLength - 2);
+  }
+}
+
 function workingAdd() {
+  switchOperator();
   operate();
   if (resultDisplay.textContent.includes('divide by 0')) {
     workingDisplay.textContent += '0';
@@ -266,20 +277,23 @@ function workingAdd() {
 }
 
 function workingSubtract() {
+  switchOperator();
   operate();
   if (resultDisplay.textContent.includes('divide by 0')) {
     workingDisplay.textContent += '0';
   }
   displayText = workingDisplay.textContent.split(' ');
-  if (displayText[displayText.length - 1].includes('-')) {
+//  if (displayText[displayText.length - 1].includes('-')) {
     // do nothing
-  } else {
+    console.log('-')
+  //} else {
     workingDisplay.textContent += ' - ';
     isResult = false;
-  }  
+  //}  
 }
 
 function workingMultiply() {
+  switchOperator();
   operate();
   if (resultDisplay.textContent.includes('divide by 0')) {
     workingDisplay.textContent += '0';
@@ -294,6 +308,7 @@ function workingMultiply() {
 }
 
 function workingDivide() {
+  switchOperator();
   operate();
   if (resultDisplay.textContent.includes('divide by 0')) {
     workingDisplay.textContent += '0';
